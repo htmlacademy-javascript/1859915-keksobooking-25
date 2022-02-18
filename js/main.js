@@ -33,7 +33,7 @@ function getRandomCoordinate (min, max, decimals) {
 }
 
 
-function getRandomCoordinate (min, max, decimals) {
+function getRandomCoordinate2 (min, max, decimals) {
   if ((min >= max) || (min < 0)) {
     return 'Диапазон для координаты задан неверно';
   }
