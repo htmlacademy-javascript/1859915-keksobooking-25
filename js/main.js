@@ -20,7 +20,7 @@ function getRandomInt (min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-console.log(getRandomInt(3,5));
+getRandomInt(3,5);
 
 //Функция для вывода случайной координаты из диапазона (задано количество знаков после запятой)
 function getRandomCoordinate (min, max, decimals) {
@@ -28,10 +28,11 @@ function getRandomCoordinate (min, max, decimals) {
     return 'Диапазон для координаты задан неверно';
   }
 
-  let coordinate = Math.random() * (max - min + 1) + min;
+  const coordinate = Math.random() * (max - min + 1) + min;
   return coordinate.toFixed(decimals);
 }
 
+getRandomCoordinate(2, 5, 2);
 
 function getRandomCoordinate2 (min, max, decimals) {
   if ((min >= max) || (min < 0)) {
@@ -47,3 +48,5 @@ function getRandomCoordinate2 (min, max, decimals) {
   }
   return coordinate.toFixed(decimals);
 }
+
+getRandomCoordinate2(2, 5, 2);
