@@ -39,7 +39,6 @@ getRandomPositiveFloat(2, 5, 2);
 
 /**
 Структура каждого объекта должна быть следующей:
-
 offer, объект — содержит информацию об объявлении. Состоит из полей:
 address, строка — адрес предложения. Для простоты пусть пока составляется из географических координат по маске {{location.lat}}, {{location.lng}}.
 features, массив строк — массив случайной длины из значений: wifi, dishwasher, parking, washer, elevator, conditioner. Значения не должны повторяться.
@@ -72,6 +71,30 @@ const CHECK_IN_OUT = [
   '14:00',
 ];
 
+const FEATURES = [
+  'wifi',
+  'dishwasher',
+  'parking',
+  'washer',
+  'elevator',
+  'conditioner',
+];
+
+const DESCRIPTION = [
+  'Шикарное жилье с видом на горы',
+  'Панорамные окна для встречи заката',
+  'Тихое местечко для размеренного отдыха',
+  'Номер для деловых поездок и командировок',
+];
+
+const PHOTOS = [
+  'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/duonguyen-8LrGtIxxa4w.jpg',
+  'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg',
+  'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg',
+];
+
+const SIMILAR_OFFERS_COUNT = 10;
+
 /**
  * Функция для выбора случайного элемента из массива
  * @param {Array} elements — массив
@@ -81,12 +104,41 @@ const getRandomArrayElement = (elements) => {
   return elements[getRandomPositiveInteger(0, elements.length - 1)];
 };
 
+//Функция для генерации массива случайной длины
+const getRandomArray = function (array) {
+  let randomArray = [];
+  let arrayLength = getRandomPositiveInteger(1, array.length);
+
+  for (let i = 0; i < arrayLength; i++) {
+    randomArray = array.push(array[i]);
+  }
+  return randomArray;
+}
+
+const getRandomArray = function (array) {
+  let length = array.length;
+  let arrayLength = getRandomPositiveInteger(1, length);
+  let randomArray = Array(arrayLength);
+
+  for (let i = 0; i < arrayLength; i++) {
+    randomArray = array.push(array[i]);
+  }
+  return randomArray;
+}
+
+
+let avatarNumber = 0;
+
 const createOffer = () => {
 
-  let avatarNumber = getRandomPositiveInteger(1, 10);
+  avatarNumber = Number(avatarNumber) + 1;
+
   if (avatarNumber < 10) {
     avatarNumber = '0' + avatarNumber;
   }
+
+  const lat = getRandomPositiveFloat(35.65000, 35.70000, 5);
+  const lng = getRandomPositiveFloat(139.70000, 139.80000, 5);
 
   return {
     author: {
@@ -94,17 +146,27 @@ const createOffer = () => {
     },
     offer: {
       title: getRandomArrayElement(TITLES),
-      adress: '',
+      adress: `${lat} , ${lng}`,
       price: getRandomPositiveInteger(0, 200000),
       type: getRandomArrayElement(TYPES),
       rooms: getRandomPositiveInteger(1, 10),
       guests: getRandomPositiveInteger(1, 40),
       checkin: getRandomArrayElement(CHECK_IN_OUT),
       checkout: getRandomArrayElement(CHECK_IN_OUT),
+      features: '',
+      description: getRandomArrayElement(DESCRIPTION),
+      photos: getRandomArray(PHOTOS),
+    },
+    location: {
+      lat: lat,
+      lng: lng,
     }
   };
 };
 
-console.log(
-  createOffer()
-);
+// console.log(
+//   createOffer()
+// );
+
+const similarOffers = Array.from({length: SIMILAR_OFFERS_COUNT}, createOffer);
+console.log(similarOffers);
