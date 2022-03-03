@@ -71,14 +71,14 @@ const CHECK_IN_OUT = [
   '14:00',
 ];
 
-const FEATURES = [
-  'wifi',
-  'dishwasher',
-  'parking',
-  'washer',
-  'elevator',
-  'conditioner',
-];
+// const FEATURES = [
+//   'wifi',
+//   'dishwasher',
+//   'parking',
+//   'washer',
+//   'elevator',
+//   'conditioner',
+// ];
 
 const DESCRIPTION = [
   'Шикарное жилье с видом на горы',
@@ -113,9 +113,9 @@ const getRandomArray = function (array) {
     randomArray = array.push(array[i]);
   }
   return randomArray;
-}
+};
 
-const getRandomArray = function (array) {
+const getRandomArray2 = function (array) {
   let length = array.length;
   let arrayLength = getRandomPositiveInteger(1, length);
   let randomArray = Array(arrayLength);
@@ -124,7 +124,9 @@ const getRandomArray = function (array) {
     randomArray = array.push(array[i]);
   }
   return randomArray;
-}
+};
+
+getRandomArray2([1,2]);
 
 
 let avatarNumber = 0;
