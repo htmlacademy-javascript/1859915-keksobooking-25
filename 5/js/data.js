@@ -1,7 +1,4 @@
-import {getRandomPositiveInteger} from './util.js';
-import {getRandomPositiveFloat} from './util.js';
-import {getRandomArrayElement}from './util.js';
-import {getNewRandomArray} from './util.js';
+import {getRandomPositiveInteger, getRandomPositiveFloat, getRandomArrayElement, getNewRandomArray} from './util.js';
 
 const TITLES = [
   'Райское место',
@@ -9,6 +6,13 @@ const TITLES = [
   'Прекрасное жилье',
   'Счастье путешественника'
 ];
+
+const MIN_PRICE = 100;
+const MAX_PRICE = 200000;
+const MIN_ROOMS = 1;
+const MAX_ROOMS = 20;
+const MIN_GUESTS = 1;
+const MAX_GUESTS = 40;
 
 const TYPES = [
   'palace',
@@ -46,6 +50,13 @@ const PHOTOS = [
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg',
 ];
 
+const MIN_LAT = 35.65
+const MAX_LAT = 35.7;
+const MIN_LNG = 139.7;
+const MAX_LNG = 139.8;
+const COORDINATE_DIGITS = 5;
+
+
 const SIMILAR_OFFERS_COUNT = 10;
 
 
@@ -68,20 +79,20 @@ const createOffer = () => {
   //   avatarNumber = '0' + avatarNumber;
   // }
 
-  const lat = getRandomPositiveFloat(35.65000, 35.70000, 5);
-  const lng = getRandomPositiveFloat(139.70000, 139.80000, 5);
+  const lat = getRandomPositiveFloat(MIN_LAT, MAX_LAT, COORDINATE_DIGITS);
+  const lng = getRandomPositiveFloat(MIN_LNG, MAX_LNG, COORDINATE_DIGITS);
 
   return {
     author: {
-      avatar: avatarNumber < 10 ? 'img/avatars/user' + '0' + avatarNumber + '.png' : 'img/avatars/user' + '0' + avatarNumber + '.png',
+      avatar: avatarNumber < 10 ? `img/avatars/user0${avatarNumber}.png` : `img/avatars/user${avatarNumber}.png`,
     },
     offer: {
       title: getRandomArrayElement(TITLES),
-      adress: `${lat} , ${lng}`,
-      price: getRandomPositiveInteger(0, 200000),
+      address: `${lat}, ${lng}`,
+      price: getRandomPositiveInteger(MIN_PRICE, MAX_PRICE),
       type: getRandomArrayElement(TYPES),
-      rooms: getRandomPositiveInteger(1, 10),
-      guests: getRandomPositiveInteger(1, 40),
+      rooms: getRandomPositiveInteger(MIN_ROOMS, MAX_ROOMS),
+      guests: getRandomPositiveInteger(MAX_GUESTS, MAX_GUESTS),
       checkin: getRandomArrayElement(CHECK_IN_OUT),
       checkout: getRandomArrayElement(CHECK_IN_OUT),
       features: getNewRandomArray(FEATURES),
@@ -101,6 +112,6 @@ const createOffer = () => {
  *  @param {Function} createOffer - функция по созданию одного объявления
  *  @return {Array} - массив из заданного числа объявлений
  */
-const similarOffers = () => Array.from({length: SIMILAR_OFFERS_COUNT}, createOffer);
+const createOffers = () => Array.from({length: SIMILAR_OFFERS_COUNT}, createOffer);
 
-export {similarOffers};
+export {createOffers};
