@@ -59,6 +59,15 @@ const COORDINATE_DIGITS = 5;
 
 const SIMILAR_OFFERS_COUNT = 10;
 
+//попыталась сделать функцию вместо avatarNumber и что-то не получилось(
+const createID = function () {
+  let lastID = 0;
+
+  return function () {
+    lastID += 1;
+    return lastID;
+  };
+};
 
 let avatarNumber = 0;
 

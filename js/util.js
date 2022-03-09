@@ -73,7 +73,5 @@ const getNewArray = function (array) {
   return newArray;
 };
 
-export {getRandomPositiveInteger};
-export {getRandomPositiveFloat};
-export {getRandomArrayElement};
-export {getNewRandomArray};
+export {getRandomPositiveInteger, getRandomPositiveFloat, getRandomArrayElement, getNewRandomArray};
+
