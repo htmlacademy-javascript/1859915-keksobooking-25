@@ -35,9 +35,8 @@
  * @param {Array} elements — массив
  * @return {*} — случайный элемент
  */
-const getRandomArrayElement = (elements) => {
-  return elements[getRandomPositiveInteger(0, elements.length - 1)];
-};
+
+const getRandomArrayElement = (elements) => elements[getRandomPositiveInteger(0, elements.length - 1)];
 
 /**
 * Функция для перемешивания массива
