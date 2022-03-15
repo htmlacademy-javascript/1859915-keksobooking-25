@@ -57,7 +57,7 @@ const MAX_LNG = 139.8;
 const COORDINATE_DIGITS = 5;
 
 
-const SIMILAR_OFFERS_COUNT = 10;
+
 
 //попыталась сделать функцию вместо avatarNumber и что-то не получилось(
 const createID = function () {
@@ -101,7 +101,7 @@ const createOffer = () => {
       price: getRandomPositiveInteger(MIN_PRICE, MAX_PRICE),
       type: getRandomArrayElement(TYPES),
       rooms: getRandomPositiveInteger(MIN_ROOMS, MAX_ROOMS),
-      guests: getRandomPositiveInteger(MAX_GUESTS, MAX_GUESTS),
+      guests: getRandomPositiveInteger(MIN_GUESTS, MAX_GUESTS),
       checkin: getRandomArrayElement(CHECK_IN_OUT),
       checkout: getRandomArrayElement(CHECK_IN_OUT),
       features: getNewRandomArray(FEATURES),
@@ -117,10 +117,8 @@ const createOffer = () => {
 
 /**
  * Функция для получения данных одного объявления
- *  @param {Integer} SIMILAR_OFFERS_COUNT — число необходимых объявлений
- *  @param {Function} createOffer - функция по созданию одного объявления
+ *  @param {Integer} count — число необходимых объявлений
  *  @return {Array} - массив из заданного числа объявлений
  */
-const createOffers = () => Array.from({length: SIMILAR_OFFERS_COUNT}, createOffer);
-
+const createOffers = (count) => Array.from({length: count}, createOffer);
 export {createOffers};
