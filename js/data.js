@@ -50,16 +50,17 @@ const PHOTOS = [
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg',
 ];
 
-const MIN_LAT = 35.65
+const MIN_LAT = 35.65;
 const MAX_LAT = 35.7;
 const MIN_LNG = 139.7;
 const MAX_LNG = 139.8;
 const COORDINATE_DIGITS = 5;
 
+/**
+ * Функция для получения уникального ID (перебираются по порядку)
+ *  @return {Integer} - уникальный ID
+ */
 
-
-
-//попыталась сделать функцию вместо avatarNumber и что-то не получилось(
 const createID = function () {
   let lastID = 0;
 
@@ -69,7 +70,7 @@ const createID = function () {
   };
 };
 
-let avatarNumber = 0;
+const getCounter = createID();
 
 /**
  * Функция для получения данных одного объявления
@@ -81,12 +82,7 @@ let avatarNumber = 0;
 
 const createOffer = () => {
 
-  avatarNumber = avatarNumber + 1;
-  // avatarNumber = Number(avatarNumber)++;
-
-  // if (avatarNumber < 10) {
-  //   avatarNumber = '0' + avatarNumber;
-  // }
+  const avatarNumber = getCounter();
 
   const lat = getRandomPositiveFloat(MIN_LAT, MAX_LAT, COORDINATE_DIGITS);
   const lng = getRandomPositiveFloat(MIN_LNG, MAX_LNG, COORDINATE_DIGITS);

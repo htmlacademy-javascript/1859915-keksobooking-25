@@ -5,7 +5,7 @@
  * @return {integer} — случайное число
  */
 
- function getRandomPositiveInteger (a, b) {
+function getRandomPositiveInteger (a, b) {
 
   const min = Math.ceil(Math.min(Math.abs(a), Math.abs(b)));
   const max = Math.floor(Math.max(Math.abs(a), Math.abs(b)));
@@ -21,16 +21,16 @@
  * @param {Number} digits — число знаков после запятой
  * @return {float} — случайное число с плавающей запятой
  */
- function getRandomPositiveFloat (a, b, digits = 1) {
+function getRandomPositiveFloat (a, b, digits = 1) {
 
   const min = Math.min(Math.abs(a), Math.abs(b));
   const max = Math.max(Math.abs(a), Math.abs(b));
 
   const result = Math.random() * (max - min) + min;
   return +result.toFixed(digits);
- }
+}
 
- /**
+/**
  * Функция для выбора случайного элемента из массива
  * @param {Array} elements — массив
  * @return {*} — случайный элемент
@@ -43,9 +43,7 @@ const getRandomArrayElement = (elements) => elements[getRandomPositiveInteger(0,
 * @param {Array} array — массив
 * @return {Array} - перемешанный массив
 */
-const getMixedArray = (array) => {
-  return array.map(i => [Math.random(), i]).sort().map(i=>i[1]);
-};
+const getMixedArray = (array) => array.map((i) => [Math.random(), i]).sort().map((i)=>i[1]);
 
 /**
  * Функция для генерации нового массива на основе старого случайным образом
@@ -67,7 +65,7 @@ const getNewArray = function (array) {
  *  @param {Array} mixedArray - рандомно перемешанный массив
  *  @param {Array} newArray - новый массив случайной длины
  */
- const getNewRandomArray = function (array) {
+const getNewRandomArray = function (array) {
   const mixedArray = getMixedArray(array);
   const newArray = getNewArray(mixedArray);
   return newArray;

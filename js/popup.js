@@ -17,7 +17,7 @@ const roomsNouns = [
 ];
 
 const guestsNouns = [
- 'гостя', 'гостей', 'гостей'
+  'гостя', 'гостей', 'гостей'
 ];
 
 /**
@@ -28,11 +28,11 @@ const guestsNouns = [
  */
 
 function numWord (value, words) {
-	const num = value % 10;
-	if (value > 10 && value < 20) return words[2];
-	if (num > 1 && num < 5) return words[1];
-	if (num == 1) return words[0];
-	return words[2];
+  const num = value % 10;
+  if (value > 10 && value < 20) {return words[2];}
+  if (num > 1 && num < 5) {return words[1];}
+  if (num === 1) {return words[0];}
+  return words[2];
 }
 
 const popupList = document.querySelector('#map-canvas');
@@ -53,27 +53,26 @@ const renderPopup = ({author , offer}) => {
   const featuresList =  popupFeatures.querySelectorAll('.popup__feature');
   featuresList.forEach((featureListItem) => {
     const isUsed = features.some(
-      (feature) => featureListItem.classList.contains('popup__feature--' + feature)
+      (feature) => featureListItem.classList.contains(`popup__feature--${  feature}`)
     );
 
     if (!isUsed) {
       featureListItem.remove();
     }
-  })
+  });
 
   const photosList = popupElement.querySelector('.popup__photos');
-  const photoTemplate = photosList.querySelector('.popup__photo')
+  const photoTemplate = photosList.querySelector('.popup__photo');
   photos.forEach((photo) => {
     const photoElement = photoTemplate.cloneNode();
     photoElement.src = photo;
     photosList.append(photoElement);
-  })
+  });
 
   photoTemplate.remove(); //удаляет первое фото - шаблон
-  popupList.appendChild(popupElement)
-}
+  popupList.appendChild(popupElement);
+};
 
 export {renderPopup};
-
 
 
