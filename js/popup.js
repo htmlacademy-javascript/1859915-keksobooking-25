@@ -1,11 +1,7 @@
 const popupTemplate = document.querySelector('#card').content.querySelector('.popup');
 
-
 //учесть, если данных в поле не будет? через удаление тега для данных?
 
-
-//Выведите количество гостей и комнат offer.rooms и offer.guests в блок .popup__text--capacity строкой вида {{offer.rooms}} комнаты для {{offer.guests}} гостей. Например, «2 комнаты для 3 гостей».
-// В блок .popup__photos выведите все фотографии из списка offer.photos. Каждая из строк массива photos должна записываться как атрибут src соответствующего изображения.
 // Замените значение атрибута src у аватарки пользователя .popup__avatar на значение поля author.avatar.
 
 const livingType = {
@@ -16,6 +12,29 @@ const livingType = {
   hotel: 'Отель',
 };
 
+const roomsNouns = [
+  'комната', 'комнаты', 'комнат'
+];
+
+const guestsNouns = [
+ 'гостя', 'гостей', 'гостей'
+];
+
+/**
+ * Функция для подбора склонения существительного в словосочетании с числительным
+ *  @param {Integer} value — числительное
+ *  @param {Array} words — массив вариантов склонений
+ *  @return {String} - существительное в верном склонении
+ */
+
+function numWord (value, words) {
+	const num = value % 10;
+	if (value > 10 && value < 20) return words[2];
+	if (num > 1 && num < 5) return words[1];
+	if (num == 1) return words[0];
+	return words[2];
+}
+
 const popupList = document.querySelector('#map-canvas');
 
 const renderPopup = ({author , offer}) => {
@@ -24,7 +43,7 @@ const renderPopup = ({author , offer}) => {
   popupElement.querySelector('.popup__title').textContent = title;
   popupElement.querySelector('.popup__text--address').textContent = address;
   popupElement.querySelector('.popup__type').textContent = livingType[type];
-  popupElement.querySelector('.popup__text--capacity').textContent = `${rooms} комнаты для ${guests} гостей`;
+  popupElement.querySelector('.popup__text--capacity').textContent = `${rooms} ${numWord(rooms, roomsNouns)} для ${guests} ${numWord(guests, guestsNouns)}`;
   popupElement.querySelector('.popup__text--time').textContent = `Заезд после ${checkin}, выезд до ${checkout}`;
   popupElement.querySelector('.popup__description').textContent =  description;
   popupElement.querySelector('.popup__avatar').src = author.avatar;
@@ -50,9 +69,7 @@ const renderPopup = ({author , offer}) => {
     photosList.append(photoElement);
   })
 
-
-
-
+  photoTemplate.remove(); //удаляет первое фото - шаблон
   popupList.appendChild(popupElement)
 }
 
