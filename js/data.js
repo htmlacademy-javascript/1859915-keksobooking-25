@@ -60,7 +60,6 @@ const COORDINATE_DIGITS = 5;
  * Функция для получения уникального ID (перебираются по порядку)
  *  @return {Integer} - уникальный ID
  */
-
 const createID = function () {
   let lastID = 0;
 
@@ -79,7 +78,6 @@ const getCounter = createID();
  *  @param {Float} lng - долгота
  *  @return {Object} - объект со всеми данными об объявлении
  */
-
 const createOffer = () => {
 
   const avatarNumber = getCounter();
@@ -95,7 +93,7 @@ const createOffer = () => {
       title: getRandomArrayElement(TITLES),
       address: `${lat}, ${lng}`,
       price: getRandomPositiveInteger(MIN_PRICE, MAX_PRICE),
-      type: getRandomArrayElement(TYPES),
+      type: '',//getRandomArrayElement(TYPES),
       rooms: getRandomPositiveInteger(MIN_ROOMS, MAX_ROOMS),
       guests: getRandomPositiveInteger(MIN_GUESTS, MAX_GUESTS),
       checkin: getRandomArrayElement(CHECK_IN_OUT),
