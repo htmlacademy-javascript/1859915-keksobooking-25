@@ -359,6 +359,10 @@ fieldset {
   max-width: 50%;
 }
 
+.ad-form__element--error input {
+  outline: 2px solid #ff6547;
+}
+
 .ad-form__label {
   display: block;
   padding-bottom: 5px;
