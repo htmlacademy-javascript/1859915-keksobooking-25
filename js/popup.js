@@ -1,9 +1,5 @@
 const popupTemplate = document.querySelector('#card').content.querySelector('.popup');
 
-//учесть, если данных в поле не будет? через удаление тега для данных?
-
-// Замените значение атрибута src у аватарки пользователя .popup__avatar на значение поля author.avatar.
-
 const livingType = {
   flat: {
     name: 'Квартира',
@@ -37,9 +33,9 @@ const guestsNouns = [
 
 /**
  * Функция для подбора склонения существительного в словосочетании с числительным
- *  @param {Integer} value — числительное
- *  @param {Array} words — массив вариантов склонений
- *  @return {String} - существительное в верном склонении
+ * @param {Integer} value — числительное
+ * @param {Array} words — массив вариантов склонений
+ * @return {String} - существительное в верном склонении
  */
 
 function numWord (value, words) {
@@ -98,16 +94,6 @@ const renderPopup = ({author , offer}) => {
   }
 
   popupList.appendChild(popupElement);
-
-
-  // const popupFields = popupElement.children;
-  // for (let i = 0; i < popupFields.length; i++) {
-  //   if (!popupFields[i].textContent) {popupFields[i].remove()}
-  // }
-  // popupFields.forEach((field) => {
-  //   if (!field.textContent) {field.remove()}
-  // })
-
 };
 
 export {renderPopup};

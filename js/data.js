@@ -58,7 +58,7 @@ const COORDINATE_DIGITS = 5;
 
 /**
  * Функция для получения уникального ID (перебираются по порядку)
- *  @return {Integer} - уникальный ID
+ * @return {Integer} - уникальный ID
  */
 const createID = function () {
   let lastID = 0;
@@ -73,10 +73,10 @@ const getCounter = createID();
 
 /**
  * Функция для получения данных одного объявления
- *  @param {Integer} avatarNumber — id аватара
- *  @param {Float} lat - широта
- *  @param {Float} lng - долгота
- *  @return {Object} - объект со всеми данными об объявлении
+ * @param {Integer} avatarNumber — id аватара
+ * @param {Float} lat - широта
+ * @param {Float} lng - долгота
+ * @return {Object} - объект со всеми данными об объявлении
  */
 const createOffer = () => {
 
@@ -111,8 +111,8 @@ const createOffer = () => {
 
 /**
  * Функция для получения данных одного объявления
- *  @param {Integer} count — число необходимых объявлений
- *  @return {Array} - массив из заданного числа объявлений
+ * @param {Integer} count — число необходимых объявлений
+ * @return {Array} - массив из заданного числа объявлений
  */
 const createOffers = (count) => Array.from({length: count}, createOffer);
 export {createOffers};

@@ -1,9 +1,6 @@
-const getDisabledForm = function () {
+const activateForm = (boolean) => {
   const mapFilterForm = document.querySelector('.map__filters');
   const form =  document.querySelector('.ad-form');
-  //чтобы было видно, что элементы не реагируют
-  // mapFilterForm.classList.add('ad-form--disabled');
-  // form.classList.add('ad-form--disabled');
 
   const mapSelectList = mapFilterForm.querySelectorAll('select');
   const mapFieldsetList = mapFilterForm.querySelectorAll('fieldset');
@@ -13,10 +10,21 @@ const getDisabledForm = function () {
 
   const interactiveElementsArray = [mapSelectList, mapFieldsetList, formFieldsetList, formInputsList];
 
-  interactiveElementsArray.forEach((list) => {
-    list.forEach((element) => element.setAttribute('disabled', 'disabled'));
-  });
+  if (boolean) {
+    mapFilterForm.classList.remove('ad-form--disabled');
+    form.classList.remove('ad-form--disabled');
 
+    interactiveElementsArray.forEach((list) => {
+      list.forEach((element) => element.removeAttribute('disabled'));
+    });
+  } else {
+    mapFilterForm.classList.add('ad-form--disabled');
+    form.classList.add('ad-form--disabled');
+
+    interactiveElementsArray.forEach((list) => {
+      list.forEach((element) => element.setAttribute('disabled', true));
+    });
+  }
 };
 
-export {getDisabledForm};
+export {activateForm};
