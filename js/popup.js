@@ -46,7 +46,7 @@ function numWord (value, words) {
   return words[2];
 }
 
-const popupList = document.querySelector('#map-canvas');
+//const popupList = document.querySelector('#map-canvas');
 
 const renderPopup = ({author , offer}) => {
   const {title, address, type, rooms, guests, checkin, checkout, features, description, photos, price} = offer;
@@ -92,8 +92,8 @@ const renderPopup = ({author , offer}) => {
   if (!photosList.childElementCount) {
     photosList.remove();
   }
-
-  popupList.appendChild(popupElement);
+  return popupElement;
+  // popupList.appendChild(popupElement);
 };
 
 export {renderPopup};
