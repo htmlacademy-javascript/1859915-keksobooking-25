@@ -6,6 +6,7 @@
   <link rel="stylesheet" href="css/style.css">
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="leaflet/leaflet.css">
+  <link rel="stylesheet" href="nouislider/nouislider.css">
   <title>Кексобукинг</title>
 </head>
 <body>
@@ -107,7 +108,7 @@
         <fieldset class="ad-form__element">
           <label class="ad-form__label" for="price">Цена за ночь, руб.</label>
           <input id="price" name="price" type="number" placeholder="5000" required min="0" max="100000">
-          <div class="ad-form__slider"></div>
+          <div class="ad-form__slider" id="slider"></div>
         </fieldset>
         <fieldset class="ad-form__element ad-form__element--time">
           <label class="ad-form__label" for="timein">Время заезда и выезда</label>
@@ -232,6 +233,7 @@
     </div>
   </template>
   <script src="leaflet/leaflet.js"></script>
+  <script src="nouislider/nouislider.js"></script>
   <script src="pristine/pristine.min.js"></script>
   <script src="js/main.js" type="module"></script>
 </body>

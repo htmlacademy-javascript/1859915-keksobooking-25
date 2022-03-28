@@ -3,6 +3,7 @@
 import {activateForm} from './form.js';
 import {activateValidation} from './user-form.js';
 import './map.js';
+import './slider.js';
 
 // const SIMILAR_OFFERS_COUNT = 10;
 
