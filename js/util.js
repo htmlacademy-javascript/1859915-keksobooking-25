@@ -61,9 +61,9 @@ const getNewArray = function (array) {
 
 /**
  * Функция для получения нового перемешанного массива случайной длины
- *  @param {Array} array — массив
- *  @param {Array} mixedArray - рандомно перемешанный массив
- *  @param {Array} newArray - новый массив случайной длины
+ * @param {Array} array — массив
+ * @param {Array} mixedArray - рандомно перемешанный массив
+ * @param {Array} newArray - новый массив случайной длины
  */
 const getNewRandomArray = function (array) {
   const mixedArray = getMixedArray(array);

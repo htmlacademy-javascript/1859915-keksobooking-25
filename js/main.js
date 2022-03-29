@@ -1,12 +1,14 @@
-import {createOffers} from './data.js';
-import  {renderPopup} from './popup.js';
-import {getDisabledForm} from './form.js';
+// import {createOffers} from './data.js';
+// import  {renderPopup} from './popup.js';
+import {activateForm} from './form.js';
 import {activateValidation} from './user-form.js';
+import './map.js';
+import './slider.js';
 
-const SIMILAR_OFFERS_COUNT = 10;
+// const SIMILAR_OFFERS_COUNT = 10;
 
-const offersData = createOffers(SIMILAR_OFFERS_COUNT);
-renderPopup(offersData[3]);
+// const offersData = createOffers(SIMILAR_OFFERS_COUNT);
+// renderPopup(offersData[3]);
 
 activateValidation();
-// getDisabledForm();
+activateForm(true);

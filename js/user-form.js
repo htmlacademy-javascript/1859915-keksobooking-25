@@ -5,23 +5,13 @@ const roomsGuests = {
   },
   2 : {
     rooms: [1,2],
-    messsage: 'only one guest'
+    messsage: 'max 2 guests'
   },
   3 : {
-    rooms: [1,2],
-    messsage: 'only one guest'
+    rooms: [1,2,3],
+    messsage: 'max 3 guests'
   },
-}
-//перенести в util.js?
-const isArrayIncludes = (array, value) => {
-  for (let i = 0; i < array.length; i++) {
-    if (array[i] == value) {
-      return true;
-    }
-  }
-  return false;
-}
-
+};
 
 const activateValidation = () => {
 
@@ -37,40 +27,42 @@ const activateValidation = () => {
   const roomsField = form.querySelector('#room_number');
   const guestsField = form.querySelector('#capacity');
 
+
   const validateRoomsGuests = () => {
 
-    let roomsFieldValue;
-    //получили значение из поля комнат
-    roomsField.addEventListener('change', function() {
-    roomsFieldValue = roomsField.value;
-    return roomsFieldValue; //не могу вывести значение отсюда:(
-    });
-    console.log(roomsFieldValue)
+    let roomsFieldValue = roomsField.value;
+    let guestsFieldValue = guestsField.value;
+    let allowedGuestsNumbers = roomsGuests[+roomsFieldValue].rooms;
 
-    //получили значение из поля гостей
-    guestsField.addEventListener('change', function(){
-      return guestsFieldValue = guestsField.value; //аналогично
+    roomsField.addEventListener('change', () => {
+      roomsFieldValue = roomsField.value;
+      guestsFieldValue = guestsField.value;
+      return allowedGuestsNumbers.includes(+guestsFieldValue);
     });
-    //зайти в объект roomsGuests, по ключу найти допустимый массив
-    const allowedGuestsNumbers =  roomsGuests[roomsFieldValue].rooms;
-    //проверить, есть ли в массиве значение, полученное из поля гостей
-    return isArrayIncludes(allowedGuestsNumbers, guestsFieldValue)
-  }
 
-  pristine.addValidator(roomsField, validateRoomsGuests, 'количество комнат не соответствует')
+    guestsField.addEventListener('change', () => {
+      roomsFieldValue = roomsField.value;
+      guestsFieldValue = guestsField.value;
+      return allowedGuestsNumbers.includes(+guestsFieldValue);
+    });
+
+    // const allowedGuestsNumbers = roomsGuests[+roomsFieldValue].rooms;
+    // debugger;
+    return allowedGuestsNumbers.includes(+guestsFieldValue);
+  };
+
+  pristine.addValidator(roomsField, validateRoomsGuests, 'количество комнат не соответствует');
 
   form.addEventListener('submit', (evt) => {
     evt.preventDefault();
     if (pristine.validate()) {
       form.submit();
-    };
+    }
     // debugger;
-  })
+  });
 
 };
 
 export {activateValidation};
-
-
 
 

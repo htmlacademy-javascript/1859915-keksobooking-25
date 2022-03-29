@@ -1,9 +1,5 @@
 const popupTemplate = document.querySelector('#card').content.querySelector('.popup');
 
-//учесть, если данных в поле не будет? через удаление тега для данных?
-
-// Замените значение атрибута src у аватарки пользователя .popup__avatar на значение поля author.avatar.
-
 const livingType = {
   flat: {
     name: 'Квартира',
@@ -37,9 +33,9 @@ const guestsNouns = [
 
 /**
  * Функция для подбора склонения существительного в словосочетании с числительным
- *  @param {Integer} value — числительное
- *  @param {Array} words — массив вариантов склонений
- *  @return {String} - существительное в верном склонении
+ * @param {Integer} value — числительное
+ * @param {Array} words — массив вариантов склонений
+ * @return {String} - существительное в верном склонении
  */
 
 function numWord (value, words) {
@@ -50,7 +46,7 @@ function numWord (value, words) {
   return words[2];
 }
 
-const popupList = document.querySelector('#map-canvas');
+//const popupList = document.querySelector('#map-canvas');
 
 const renderPopup = ({author , offer}) => {
   const {title, address, type, rooms, guests, checkin, checkout, features, description, photos, price} = offer;
@@ -96,18 +92,8 @@ const renderPopup = ({author , offer}) => {
   if (!photosList.childElementCount) {
     photosList.remove();
   }
-
-  popupList.appendChild(popupElement);
-
-
-  // const popupFields = popupElement.children;
-  // for (let i = 0; i < popupFields.length; i++) {
-  //   if (!popupFields[i].textContent) {popupFields[i].remove()}
-  // }
-  // popupFields.forEach((field) => {
-  //   if (!field.textContent) {field.remove()}
-  // })
-
+  return popupElement;
+  // popupList.appendChild(popupElement);
 };
 
 export {renderPopup};
