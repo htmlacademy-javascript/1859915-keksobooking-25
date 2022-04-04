@@ -18,14 +18,14 @@ noUiSlider.create(sliderElement, {
     },
   },
   connect: 'lower',
-})
+});
 
 priceInput.value = 5000; //???
 
 sliderElement.noUiSlider.on('update', () => {
   priceInput.value = sliderElement.noUiSlider.get();
 
-})
+});
 
 const sliderOptions = {
   bungalow: {
@@ -68,9 +68,9 @@ const sliderOptions = {
     start: 10000,
     step: 500,
   },
-}
+};
 
 typeInput.addEventListener('change', () => {
   const type = typeInput.value;
-  sliderElement.noUiSlider.updateOptions(sliderOptions[type])
-})
+  sliderElement.noUiSlider.updateOptions(sliderOptions[type]);
+});
