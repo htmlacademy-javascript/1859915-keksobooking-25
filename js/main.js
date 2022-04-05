@@ -1,7 +1,6 @@
 import {activateForm} from './activate-form.js';
 import {setUserFormSubmit} from './user-form.js';
 // import {createMapMarkers} from './map.js';
-import './slider.js'; //изменить на импорт функции
 // import {showErrMessage} from './util.js';
 import {getMessage} from './message.js';
 import {getData} from './api.js';

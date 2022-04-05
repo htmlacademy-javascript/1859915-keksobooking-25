@@ -54,7 +54,11 @@ const renderPopup = ({author , offer}) => {
   } else {
     popupElement.querySelector('.popup__description').remove();
   }
-  author.avatar ? popupElement.querySelector('.popup__avatar').src = author.avatar : popupElement.querySelector('.popup__avatar').remove();
+  if (author.avatar) {
+    popupElement.querySelector('.popup__avatar').src = author.avatar;
+  } else {
+    popupElement.querySelector('.popup__avatar').remove();
+  }
   popupElement.querySelector('.popup__text--price').textContent = `${price} ₽/ночь`;
 
   const popupFeatures = popupElement.querySelector('.popup__features');

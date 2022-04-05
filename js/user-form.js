@@ -1,4 +1,6 @@
-import { updateSliderOptions } from "./slider.js";
+import { updateSliderOptions } from './slider.js';
+import {resetForm} from './reset.js';
+import {resetMap} from './map.js';
 
 const form = document.querySelector('.ad-form');
 
@@ -17,19 +19,19 @@ const minPrice = {
   'house': 5000,
   'palace': 10000,
 };
-
+// parseInt(value)
 const priceInput = form.querySelector('#price');
 const typeInput = form.querySelector('#type');
 
-const validatePrice = (value) => {
+const validatePrice = () => {
   const type = form.querySelector('#type').value;
-  return  parseInt(value) >= minPrice[type];
-}
+  return  priceInput.value >= minPrice[type];
+};
 
 const getPriceErrorMessage = () => {
   const type = form.querySelector('#type').value;
   return `Цена не меньше ${minPrice[type]}`;
-}
+};
 pristine.addValidator(priceInput, validatePrice, getPriceErrorMessage);
 
 const onTypeChange = () => {
@@ -37,7 +39,7 @@ const onTypeChange = () => {
   const type = typeInput.value;
   updateSliderOptions(type); //по типу жилья обновляет настройки слайдера
   pristine.validate(priceInput);
-}
+};
 typeInput.addEventListener('change', onTypeChange);
 
 const roomsGuests = {
@@ -82,6 +84,20 @@ guestsField.addEventListener('change', () => {
   pristine.validate(guestsField);
 });
 
+const onTimeInChange = () => {
+  const timeIn = document.querySelector('#timein').value;
+  document.querySelector('#timeout').value = timeIn;
+};
+
+const onTimeOutChange = () => {
+  const timeOut = document.querySelector('#timeout').value;
+  document.querySelector('#timein').value = timeOut;
+};
+
+const timeInInput = document.querySelector('#timein');
+const timeOutInput = document.querySelector('#timeout');
+timeInInput.addEventListener('change', onTimeInChange);
+timeOutInput.addEventListener('change', onTimeOutChange);
 
 const submitButton = document.querySelector('.ad-form__submit');
 
@@ -113,13 +129,15 @@ const setUserFormSubmit = (onSuccess) => {
         .then((response) => {
           if (response.ok) {
             onSuccess(true);
-            form.reset(); //как оставить значения по умолчанию?
+            resetForm();
+            resetMap(); //как оставить значения по умолчанию?
           } else {
             onSuccess(false);
           }
         })
         .then(() => unblockSubmitButton())
-        .catch(() => onSuccess(false));
+        .catch(() => console.log('Ошибка'))
+        // .catch(() => onSuccess(false));
     }
   });
 };
