@@ -70,7 +70,13 @@ const sliderOptions = {
   },
 };
 
+const updateSliderOptions = (value) => {
+  sliderElement.noUiSlider.updateOptions(sliderOptions[value]);
+}
+
 typeInput.addEventListener('change', () => {
   const type = typeInput.value;
-  sliderElement.noUiSlider.updateOptions(sliderOptions[type]);
+  updateSliderOptions(type);
 });
+
+export {updateSliderOptions};

@@ -38,14 +38,22 @@ const renderPopup = ({author , offer}) => {
   const popupElement = popupTemplate.cloneNode(true);
 
   popupElement.querySelector('.popup__title').textContent = title;
+  popupElement.querySelector('.popup__text--address').textContent = address;
 
-  address ? popupElement.querySelector('.popup__text--address').textContent = address : popupElement.querySelector('.popup__text--address').remove();
-  type ?  popupElement.querySelector('.popup__type').textContent = livingType[type].name : popupElement.querySelector('.popup__type').remove();
+  if (type) {
+    popupElement.querySelector('.popup__type').textContent = livingType[type].name;
+  } else {
+    popupElement.querySelector('.popup__type').remove();
+  }
 
   popupElement.querySelector('.popup__text--capacity').textContent = `${rooms} ${numWord(rooms, roomsNouns)} для ${guests} ${numWord(guests, guestsNouns)}`;
   popupElement.querySelector('.popup__text--time').textContent = `Заезд после ${checkin}, выезд до ${checkout}`;
 
-  description ? popupElement.querySelector('.popup__description').textContent =  description : popupElement.querySelector('.popup__description').remove();
+  if (description) {
+    popupElement.querySelector('.popup__description').textContent =  description;
+  } else {
+    popupElement.querySelector('.popup__description').remove();
+  }
   author.avatar ? popupElement.querySelector('.popup__avatar').src = author.avatar : popupElement.querySelector('.popup__avatar').remove();
   popupElement.querySelector('.popup__text--price').textContent = `${price} ₽/ночь`;
 
@@ -63,7 +71,6 @@ const renderPopup = ({author , offer}) => {
       }
     });
   }
-
 
   // if (!popupFeatures.childElementCount) {
   //   popupFeatures.remove();

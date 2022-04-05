@@ -1,6 +1,4 @@
 import { isEscapeKey } from './util.js';
-
-//доработать - элементы копируются в разметку несколько раз
 /**
  * Функция для вывода сообщения об успехе или ошибке
  * @param {Boolean} success - успех или ошибка
@@ -14,23 +12,24 @@ const getMessage = (success) => {
   const errorMessageTemplate = document.querySelector('#error').content.querySelector('.error');
   const errorMessage = errorMessageTemplate.cloneNode(true);
 
-  success ? body.appendChild(successMessage) : body.appendChild(errorMessage);
+  const message = success ? successMessage : errorMessage;
+  body.appendChild(message);
 
   document.addEventListener('click', () => {
-    success ? successMessage.classList.add('hidden') :  errorMessage.classList.add('hidden');
+    message.remove();
   });
 
   document.addEventListener('keydown', (evt) => {
     if (isEscapeKey(evt)) {
       evt.preventDefault();
-      success ? successMessage.classList.add('hidden') :  errorMessage.classList.add('hidden');
+      message.remove();
     }
   });
 
   if (!success) {
     const closeButton = errorMessage.querySelector('.error__button');
     closeButton.addEventListener('click', () => {
-      errorMessage.classList.add('hidden');
+      message.remove();
     });
   }
 };
