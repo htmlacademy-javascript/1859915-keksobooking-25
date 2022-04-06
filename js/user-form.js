@@ -1,6 +1,8 @@
-import { updateSliderOptions } from './slider.js';
+import {updateSliderOptions} from './slider.js';
 import {resetForm} from './reset.js';
 import {resetMap} from './map.js';
+import {getMessage} from './message.js';
+import {sendData} from './api.js';
 
 const form = document.querySelector('.ad-form');
 
@@ -19,7 +21,7 @@ const minPrice = {
   'house': 5000,
   'palace': 10000,
 };
-// parseInt(value)
+
 const priceInput = form.querySelector('#price');
 const typeInput = form.querySelector('#type');
 
@@ -72,16 +74,13 @@ const validateRoomsGuests = () => {
 };
 
 pristine.addValidator(roomsField, validateRoomsGuests, 'количество комнат не соответствует');
-pristine.addValidator(guestsField, validateRoomsGuests, 'количество комнат не соответствует');
 
 roomsField.addEventListener('change', () => {
   pristine.validate(roomsField);
-  pristine.validate(guestsField);
 });
 
 guestsField.addEventListener('change', () => {
   pristine.validate(roomsField);
-  pristine.validate(guestsField);
 });
 
 const onTimeInChange = () => {
@@ -119,29 +118,18 @@ const setUserFormSubmit = (onSuccess) => {
     if (pristine.validate()) {
       blockSubmitButton();
       const formData = new FormData(evt.target);
-      fetch(
-        'https://25.javascript.pages.academy/keksobooking',
-        {
-          method: 'POST',
-          contentType: 'multipart/form-data',
-          body: formData,
-        })
-        .then((response) => {
-          if (response.ok) {
-            onSuccess(true);
-            resetForm();
-            resetMap(); //как оставить значения по умолчанию?
-          } else {
-            onSuccess(false);
-          }
-        })
-        .then(() => unblockSubmitButton())
-        .catch(() => console.log('Ошибка'))
-        // .catch(() => onSuccess(false));
+      sendData(formData, () => {
+        getMessage(true);
+        resetForm();
+        resetMap();
+        unblockSubmitButton();
+      }, () => {
+        getMessage(false);
+        unblockSubmitButton();
+      });
     }
   });
 };
-
 
 export {setUserFormSubmit};
 

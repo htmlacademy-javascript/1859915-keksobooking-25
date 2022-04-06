@@ -1,10 +1,6 @@
 import {renderPopup} from './popup.js';
 import {activateForm} from './activate-form.js';
 
-
-// activateForm(false);
-// debugger;
-
 const tokyoCoordinates = {
   lat: 35.6895,
   lng: 139.692,
@@ -42,22 +38,23 @@ mainPinMarker.on('move', (evt) => {
   coordinatesInput.value = `${lat}, ${lng}`;
 });
 
-activateForm(false);//почему не работает???
-const map = L.map('map-canvas')
-  .on('load', () => {
+const map = L.map('map-canvas');
+
+const activateMap = () => {
+  map.on('load', () => {
     console.log('Карта инициализирована');
     activateForm(true);
   })
-  .setView(tokyoCoordinates, ZOOM);
+    .setView(tokyoCoordinates, ZOOM);
 
-L.tileLayer(
-  'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-  {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-  },
-).addTo(map);
-mainPinMarker.addTo(map);
-
+  L.tileLayer(
+    'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    },
+  ).addTo(map);
+  mainPinMarker.addTo(map);
+};
 
 const createOfferMarker = (offer) => {
   const {lat, lng} = offer.location;
@@ -84,12 +81,6 @@ const createMapMarkers = (offers) => {
 const resetMap = () => {
   mainPinMarker.setLatLng(tokyoCoordinates);
   map.setView(tokyoCoordinates, ZOOM);
-}
+};
 
-export {createMapMarkers, resetMap};
-
-
-// setLatLng({lat,lng}) map.setViev({lat,lng}) - понадобятся далее для сброса карт
-
-//5. сделать фильтрацию объявлений
-
+export {createMapMarkers, resetMap, activateMap};

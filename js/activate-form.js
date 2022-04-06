@@ -1,5 +1,5 @@
 const activateForm = (boolean) => {
-  const mapFilterForm = document.querySelector('.map__filters');
+
   const form =  document.querySelector('.ad-form');
 
   const mapSelectList = mapFilterForm.querySelectorAll('select');
@@ -27,4 +27,20 @@ const activateForm = (boolean) => {
   }
 };
 
-export {activateForm};
+const mapFilterForm = document.querySelector('.map__filters');
+const filters = mapFilterForm.children;
+console.log(filters);
+
+const form =  document.querySelector('.ad-form');
+const formFieldsetList = form.querySelectorAll('fieldset');
+
+
+const blockAllForm = () => {
+  mapFilterForm.classList.add('ad-form--disabled');
+  filters.forEach((element) => element.setAttribute('disabled', true));
+
+  form.classList.add('ad-form--disabled');
+  formFieldsetList.forEach((element) => element.setAttribute('disabled', true));
+};
+
+export {activateForm, blockAllForm};

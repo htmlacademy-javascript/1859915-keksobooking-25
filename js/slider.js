@@ -75,7 +75,7 @@ const getDefaultSlider = () => {
         'max' : [10000],
       },
     }
-  )
+  );
 };
 
 const updateSliderOptions = (value) => {
