@@ -1,5 +1,4 @@
 const sliderElement = document.querySelector('.ad-form__slider');
-const typeInput = document.querySelector('#type');
 const priceInput = document.querySelector('#price');
 
 noUiSlider.create(sliderElement, {
@@ -11,20 +10,17 @@ noUiSlider.create(sliderElement, {
   },
   format: {
     to: function (value) {
-      return parseInt(value);
+      return parseInt(value, 10);
     },
     from: function (value) {
-      return parseInt(value);
+      return parseInt(value, 10);
     },
   },
   connect: 'lower',
 });
 
-priceInput.value = 5000; //???
-
 sliderElement.noUiSlider.on('update', () => {
   priceInput.value = sliderElement.noUiSlider.get();
-
 });
 
 const sliderOptions = {
@@ -70,7 +66,20 @@ const sliderOptions = {
   },
 };
 
-typeInput.addEventListener('change', () => {
-  const type = typeInput.value;
-  sliderElement.noUiSlider.updateOptions(sliderOptions[type]);
-});
+const getDefaultSlider = () => {
+  sliderElement.noUiSlider.updateOptions(
+    {
+      start: [5000],
+      range: {
+        'min': [1000],
+        'max' : [10000],
+      },
+    }
+  );
+};
+
+const updateSliderOptions = (value) => {
+  sliderElement.noUiSlider.updateOptions(sliderOptions[value]);
+};
+
+export {updateSliderOptions, getDefaultSlider};

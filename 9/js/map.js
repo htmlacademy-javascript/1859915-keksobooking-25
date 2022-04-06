@@ -1,11 +1,7 @@
 import {renderPopup} from './popup.js';
 import {activateForm} from './activate-form.js';
 
-
-// activateForm(false);
-// debugger;
-
-const TOKYO_COORDINATES = {
+const tokyoCoordinates = {
   lat: 35.6895,
   lng: 139.692,
 };
@@ -25,7 +21,7 @@ const offerPinIcon = L.icon({
   iconAnchor: [PIN_SIZE / 2, PIN_SIZE],
 });
 
-const mainPinMarker = L.marker(TOKYO_COORDINATES,
+const mainPinMarker = L.marker(tokyoCoordinates,
   {
     draggable: true,
     icon: mainPinIcon,
@@ -33,7 +29,7 @@ const mainPinMarker = L.marker(TOKYO_COORDINATES,
 );
 
 const coordinatesInput = document.querySelector('#address');
-coordinatesInput.value = `${TOKYO_COORDINATES.lat}, ${TOKYO_COORDINATES.lng}`;
+coordinatesInput.value = `${tokyoCoordinates.lat}, ${tokyoCoordinates.lng}`;
 
 mainPinMarker.on('move', (evt) => {
   const coordinates = evt.target.getLatLng();
@@ -42,22 +38,23 @@ mainPinMarker.on('move', (evt) => {
   coordinatesInput.value = `${lat}, ${lng}`;
 });
 
-activateForm(false);//почему не работает???
-const map = L.map('map-canvas')
-  .on('load', () => {
+const map = L.map('map-canvas');
+
+const activateMap = () => {
+  map.on('load', () => {
     console.log('Карта инициализирована');
     activateForm(true);
   })
-  .setView(TOKYO_COORDINATES, ZOOM);
+    .setView(tokyoCoordinates, ZOOM);
 
-L.tileLayer(
-  'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-  {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-  },
-).addTo(map);
-mainPinMarker.addTo(map);
-
+  L.tileLayer(
+    'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    },
+  ).addTo(map);
+  mainPinMarker.addTo(map);
+};
 
 const createOfferMarker = (offer) => {
   const {lat, lng} = offer.location;
@@ -81,12 +78,9 @@ const createMapMarkers = (offers) => {
   });
 };
 
-// const resetMap = () => {
-// }
+const resetMap = () => {
+  mainPinMarker.setLatLng(tokyoCoordinates);
+  map.setView(tokyoCoordinates, ZOOM);
+};
 
-export {createMapMarkers};
-
-// setLatLng({lat,lng}) map.setViev({lat,lng}) - понадобятся далее для сброса карт
-
-//5. сделать фильтрацию объявлений
-
+export {createMapMarkers, resetMap, activateMap};
