@@ -1,7 +1,7 @@
 import {updateSliderOptions} from './slider.js';
 import {resetForm} from './reset.js';
 import {resetMap} from './map.js';
-import {getMessage} from './message.js';
+import {showFormMessage} from './messages.js';
 import {sendData} from './api.js';
 
 const form = document.querySelector('.ad-form');
@@ -36,8 +36,8 @@ const getPriceErrorMessage = () => {
 };
 pristine.addValidator(priceInput, validatePrice, getPriceErrorMessage);
 
-const onTypeChange = () => {
-  priceInput.placeholder = minPrice[this]; //что за значение this?
+const onTypeChange = (evt) => {
+  priceInput.placeholder = minPrice[evt.target.value];
   const type = typeInput.value;
   updateSliderOptions(type); //по типу жилья обновляет настройки слайдера
   pristine.validate(priceInput);
@@ -45,19 +45,19 @@ const onTypeChange = () => {
 typeInput.addEventListener('change', onTypeChange);
 
 const roomsGuests = {
-  '1' : {
+  1 : {
     guests: [1],
     message: 'only one guest'
   },
-  '2' : {
+  2 : {
     guests: [1, 2],
     message: 'max 2 guests'
   },
-  '3' : {
+  3 : {
     guests: [1, 2, 3],
     message: 'max 3 guests'
   },
-  '100' : {
+  100 : {
     guests: [0],
     message: 'not for guests'
   },
@@ -69,7 +69,7 @@ const guestsField = form.querySelector('#capacity');
 const validateRoomsGuests = () => {
   const selectedRooms = roomsField.value;
   const selectedGuests = guestsField.value;
-  const allowedGuests = roomsGuests[selectedRooms].guests;
+  const allowedGuests = roomsGuests[+selectedRooms].guests;
   return allowedGuests.includes(+selectedGuests);
 };
 
@@ -110,21 +110,27 @@ const unblockSubmitButton = () => {
   submitButton.textContent = 'Опубликовать';
 };
 
+const resetButton = form.querySelector('.ad-form__reset');
+resetButton.addEventListener('click', (evt) => {
+  evt.preventDefault();
+  resetForm();
+  resetMap();
+});
 
 //отправка формы
-const setUserFormSubmit = (onSuccess) => {
+const setUserFormSubmit = () => {
   form.addEventListener('submit', (evt) => {
     evt.preventDefault();
     if (pristine.validate()) {
       blockSubmitButton();
       const formData = new FormData(evt.target);
       sendData(formData, () => {
-        getMessage(true);
+        showFormMessage(true);
         resetForm();
         resetMap();
         unblockSubmitButton();
       }, () => {
-        getMessage(false);
+        showFormMessage(false);
         unblockSubmitButton();
       });
     }

@@ -1,14 +1,9 @@
-import {createMapMarkers} from './map.js';
-const SIMILAR_OFFERS_COUNT = 10;
-
 /*
 получаем ответ с сервера
 если ок - отрисовать пины и разблокировать фильтры
 если не ок - показать сообщение и оставить фильтры disabled
 */
-const renderMapPins = (offers) => {
-  createMapMarkers(offers.slice(0, SIMILAR_OFFERS_COUNT));
-};
+
 
 const getData = (onSuccess, onError) => {
   fetch('https://25.javascript.pages.academy/keksobooking/data')
@@ -43,4 +38,4 @@ const sendData = (formData, onSuccess, onError) => {
     .catch(() => onError());
 };
 
-export {getData, renderMapPins, sendData};
+export {getData, sendData};
