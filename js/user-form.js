@@ -1,4 +1,4 @@
-import {updateSliderOptions} from './slider.js';
+import {updateSliderOptions, validateSliderUpdates} from './slider.js';
 import {resetForm} from './reset.js';
 import {resetMap} from './map.js';
 import {showFormMessage} from './messages.js';
@@ -43,6 +43,8 @@ const onTypeChange = (evt) => {
   pristine.validate(priceInput);
 };
 typeInput.addEventListener('change', onTypeChange);
+
+validateSliderUpdates(pristine.validate);
 
 const roomsGuests = {
   1 : {

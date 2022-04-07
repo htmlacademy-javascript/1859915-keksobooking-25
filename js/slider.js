@@ -19,6 +19,13 @@ noUiSlider.create(sliderElement, {
   connect: 'lower',
 });
 
+const validateSliderUpdates = (validation) => {
+  sliderElement.noUiSlider.on('slide', () => {
+    priceInput.value = sliderElement.noUiSlider.get();
+    validation(priceInput);
+  });
+};
+
 sliderElement.noUiSlider.on('update', () => {
   priceInput.value = sliderElement.noUiSlider.get();
 });
@@ -82,4 +89,10 @@ const updateSliderOptions = (value) => {
   sliderElement.noUiSlider.updateOptions(sliderOptions[value]);
 };
 
-export {updateSliderOptions, getDefaultSlider};
+const blockSlider = (boolean) => {
+  if (boolean) {
+    sliderElement.setAttribute('disabled', true);
+  } else {sliderElement.removeAttribute('disabled');}
+};
+
+export {updateSliderOptions, getDefaultSlider, blockSlider, validateSliderUpdates};

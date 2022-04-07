@@ -3,6 +3,8 @@ import {setUserFormSubmit} from './user-form.js';
 import {activateMap, renderMapPins} from './map.js';
 import {showServerErrorMessage} from './messages.js';
 import {getData} from './api.js';
+import './photos.js'; //заменить на функцию
+
 
 // const SIMILAR_OFFERS_COUNT = 10;
 
@@ -21,8 +23,5 @@ getData((offers) => {
   renderMapPins(offers);
   unblockFilters();//фильтры разблокировались раньше отрисовки пинов
 }, showServerErrorMessage);
-
-
-
 
 
