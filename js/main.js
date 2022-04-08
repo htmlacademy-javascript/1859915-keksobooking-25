@@ -7,7 +7,7 @@ import {activateFilters, filtersFormChange} from './filters.js';
 import {debounce} from './util.js';
 import './photos.js';
 
-const RERENDER_DELAY = 600;
+const RERENDER_DELAY = 400;
 
 
 blockAllForms();
