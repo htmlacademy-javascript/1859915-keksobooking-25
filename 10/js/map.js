@@ -44,7 +44,6 @@ const map = L.map('map-canvas');
 
 const activateMap = () => {
   map.on('load', () => {
-    console.log('Карта инициализирована');
     unblockForm();
   })
     .setView(tokyoCoordinates, ZOOM);
@@ -75,9 +74,7 @@ const createOfferMarker = (offer) => {
     .addTo(pinsGroup)
     .bindPopup(renderPopup(offer));
 };
-//очистка старого слоя
-//сначала обрезать нужное количество
-//потом рендер и добавление на карту
+
 const renderMapPins = (offers) => {
   pinsGroup.clearLayers();
   const necessaryOffers = offers.slice(0, SIMILAR_OFFERS_COUNT);

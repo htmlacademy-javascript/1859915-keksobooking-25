@@ -1,18 +1,13 @@
 import {renderMapPins} from './map.js';
-import {getData} from './api.js';
-import {showServerErrorMessage} from './messages.js';
 const filtersForm = document.querySelector('.map__filters');
 const housingTypeInput = filtersForm.querySelector('#housing-type');
 const priceInput = filtersForm.querySelector('#housing-price');
 const roomsInput = filtersForm.querySelector('#housing-rooms');
 const guestsInput = filtersForm.querySelector('#housing-guests');
 
+const SIMILAR_OFFERS_COUNT = 10;
 
 const prices = {
-  any: {
-    min: 0,
-    max: Infinity,
-  },
   low: {
     min: 0,
     max: 10000,
@@ -27,39 +22,65 @@ const prices = {
   }
 };
 
-
-//как сделать отмену фильтра для любого типа жилья?
-const filterOffersHousingType = () => {
-  getData((offers) => {
-    const neededArray = offers.filter((element) => element.offer.type === housingTypeInput.value);
-    renderMapPins(neededArray);
-  }, showServerErrorMessage);
+const filtersFormChange = (cb) => {
+  filtersForm.addEventListener('change', cb);
 };
 
-const filterOffersPrice = () => {
-  getData((offers) => {
-    const neededArray = offers.filter((element) => element.offer.price >= prices[priceInput.value].min && element.offer.price <= prices[priceInput.value].max);
-    renderMapPins(neededArray);
-  }, showServerErrorMessage);
+const activateFilters = (offers) => {
+
+  const neededOffers = offers.slice();
+  const newArray = [];
+
+  for (let i = 0; i < neededOffers.length; i++) {
+    const  element = offers[i];
+    let check;
+
+    if (housingTypeInput.value !== 'any') {
+      check = element.offer.type === housingTypeInput.value;
+      if (!check) {
+        continue;
+      }
+    }
+
+    if (roomsInput.value !== 'any') {
+      check = element.offer.rooms === +roomsInput.value;
+      if (!check) {
+        continue;
+      }
+    }
+
+    if (priceInput.value !== 'any') {
+      check = element.offer.price >= prices[priceInput.value].min && element.offer.price <= prices[priceInput.value].max;
+      if (!check) {
+        continue;
+      }
+    }
+
+    if (guestsInput.value !== 'any') {
+      check = element.offer.guests === +guestsInput.value;
+      if (!check) {
+        continue;
+      }
+    }
+
+    const checkedFeaturesList = Array.from(document.querySelectorAll('input[name="features"]:checked'));
+    // массив выбранных фич
+    if (checkedFeaturesList.length) {
+      //если есть фичи в оффере
+      const offerFeaturesList = element.offer.features;
+      if (!offerFeaturesList) {continue;} //если массив пустой - переход к следующему объявлению
+
+      check = checkedFeaturesList.every((checkedFeature) => offerFeaturesList.includes(checkedFeature.defaultValue));
+
+      if (!check) {continue;}
+    }
+
+    newArray.push(element);
+
+    if (newArray.length === SIMILAR_OFFERS_COUNT) { break; }
+  }
+
+  renderMapPins(newArray);
 };
 
-const filterOffersRooms = () => {
-  getData((offers) => {
-    const neededArray = offers.filter((element) => element.offer.rooms === +roomsInput.value);
-    renderMapPins(neededArray);
-  }, showServerErrorMessage);
-};
-
-const filterOffersGuests = () => {
-  getData((offers) => {
-    const neededArray = offers.filter((element) => element.offer.guests === +guestsInput.value);
-    renderMapPins(neededArray);
-  }, showServerErrorMessage);
-};
-
-
-housingTypeInput.addEventListener('change', filterOffersHousingType);
-priceInput.addEventListener('change',  filterOffersPrice);
-roomsInput.addEventListener('change',  filterOffersRooms);
-guestsInput.addEventListener('change',  filterOffersGuests);
-export {filterOffersHousingType};
+export {activateFilters, filtersFormChange};
