@@ -1,5 +1,5 @@
 import {updateSliderOptions, validateSliderUpdates} from './slider.js';
-import {resetForm} from './reset.js';
+import {resetAllForms} from './reset.js';
 import {resetMap} from './map.js';
 import {showFormMessage} from './messages.js';
 import {sendData} from './api.js';
@@ -113,14 +113,19 @@ const unblockSubmitButton = () => {
 };
 
 const resetButton = form.querySelector('.ad-form__reset');
-resetButton.addEventListener('click', (evt) => {
-  evt.preventDefault();
-  resetForm();
-  resetMap();
-});
+
+const resetButtonHandler = (cb) => {
+  resetButton.addEventListener('click', (evt) => {
+    evt.preventDefault();
+    resetAllForms();
+    resetMap();
+    cb();
+  });
+};
+
 
 //отправка формы
-const setUserFormSubmit = () => {
+const setUserFormSubmit = (cb) => {
   form.addEventListener('submit', (evt) => {
     evt.preventDefault();
     if (pristine.validate()) {
@@ -128,8 +133,9 @@ const setUserFormSubmit = () => {
       const formData = new FormData(evt.target);
       sendData(formData, () => {
         showFormMessage(true);
-        resetForm();
+        resetAllForms();
         resetMap();
+        cb();
         unblockSubmitButton();
       }, () => {
         showFormMessage(false);
@@ -139,6 +145,6 @@ const setUserFormSubmit = () => {
   });
 };
 
-export {setUserFormSubmit};
+export {setUserFormSubmit, resetButtonHandler};
 
 

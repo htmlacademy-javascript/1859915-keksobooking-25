@@ -3,28 +3,31 @@ const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
 const avatarChooser = document.querySelector('#avatar');
 const avatarPreview  = document.querySelector('.ad-form-header__preview').querySelector('img');
 
+const imageChooser = document.querySelector('#images');
+const imagePreviewContainer  = document.querySelector('.ad-form__photo');
+const imagePreview = document.createElement('img');
+imagePreview.setAttribute('class', 'hidden');
+imagePreview.setAttribute('src', '#');
+imagePreview.setAttribute('width', '100%');
+imagePreview.setAttribute('heigth', '100%');
+imagePreviewContainer.appendChild(imagePreview);
 
-avatarChooser.addEventListener('change', () => {
-  const avatar = avatarChooser.files[0];
-  const avatarName = avatar.name.toLowerCase();
+const chooseFiles = (input, previewContainer) => {
+  const file = input.files[0];
+  const fileName = file.name.toLowerCase();
 
-  const matches = FILE_TYPES.some((it) => avatarName.endsWith(it));
+  const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
 
   if (matches) {
-    avatarPreview.src = URL.createObjectURL(avatar);
+    previewContainer.src = URL.createObjectURL(file);
   }
+};
+
+avatarChooser.addEventListener('change', () => {
+  chooseFiles(avatarChooser, avatarPreview);
 });
 
-const imagesChooser = document.querySelector('#images'); //input
-const imagesPreviewContainer  = document.querySelector('.ad-form__photo'); //div
-
-
-imagesChooser.addEventListener('change', () => {
-  const file =  imagesChooser.files[0];
-  const img = document.createElement('img');
-  img.setAttribute('src', '#');
-  img.setAttribute('width', '100%');
-  img.setAttribute('heigth', '100%');
-  img.src = URL.createObjectURL(file);
-  imagesPreviewContainer.appendChild(img);
+imageChooser.addEventListener('change', () => {
+  imagePreview.removeAttribute('class');
+  chooseFiles(imageChooser, imagePreview);
 });

@@ -15,5 +15,13 @@ function numWord (value, words) {
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
-export {numWord, isEscapeKey};
+const debounce = (callback, timeoutDelay) => {
+  let timeoutId;
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+};
+
+export {numWord, isEscapeKey, debounce};
 
