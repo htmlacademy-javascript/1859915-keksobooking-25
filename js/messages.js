@@ -1,9 +1,11 @@
-import { isEscapeKey } from './util.js';
+import {isEscapeKey} from './util.js';
+
+const MESSAGE_SHOW_TIME = 5000;
 /**
  * Функция для вывода сообщения об успехе или ошибке
  * @param {Boolean} success - успех или ошибка
  */
-const getMessage = (success) => {
+const showFormMessage = (success) => {
   const body = document.querySelector('body');
 
   const successMessageTemplate = document.querySelector('#success').content.querySelector('.success');
@@ -34,4 +36,27 @@ const getMessage = (success) => {
   }
 };
 
-export {getMessage};
+const showServerErrorMessage = (message) => {
+  const messageContainer = document.createElement('div');
+  messageContainer.style.zIndex = 100;
+  messageContainer.style.position = 'absolute';
+  messageContainer.style.top = 0;
+  messageContainer.style.right = 0;
+  messageContainer.style.left = 0;
+  messageContainer.style.padding = '20px';
+  messageContainer.style.fontSize = '20px';
+  messageContainer.style.textAlign = 'center';
+  messageContainer.style.color = 'black';
+  messageContainer.style.backgroundColor = '#d17381';
+  messageContainer.style.boxShadow = '0px 2px rgba(0, 0, 0, 0.2)';
+
+  messageContainer.textContent = message;
+
+  document.body.append(messageContainer);
+
+  setTimeout(() => {
+    messageContainer.remove();
+  }, MESSAGE_SHOW_TIME);
+};
+
+export {showFormMessage, showServerErrorMessage};

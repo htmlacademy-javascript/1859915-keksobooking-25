@@ -1,13 +1,15 @@
 import {renderPopup} from './popup.js';
-import {activateForm} from './activate-form.js';
+import {unblockForm} from './activate-form.js';
 
-const tokyoCoordinates = {
-  lat: 35.6895,
-  lng: 139.692,
-};
 const ZOOM = 12;
 const MAIN_PIN_SIZE = 52;
 const PIN_SIZE = 40;
+const SIMILAR_OFFERS_COUNT = 10;
+
+const tokyoCoordinates = {
+  lat: 35.68950,
+  lng: 139.69200,
+};
 
 const mainPinIcon = L.icon({
   iconUrl: './img/main-pin.svg',
@@ -42,8 +44,7 @@ const map = L.map('map-canvas');
 
 const activateMap = () => {
   map.on('load', () => {
-    console.log('Карта инициализирована');
-    activateForm(true);
+    unblockForm();
   })
     .setView(tokyoCoordinates, ZOOM);
 
@@ -55,6 +56,8 @@ const activateMap = () => {
   ).addTo(map);
   mainPinMarker.addTo(map);
 };
+
+const pinsGroup = L.layerGroup().addTo(map);
 
 const createOfferMarker = (offer) => {
   const {lat, lng} = offer.location;
@@ -68,12 +71,14 @@ const createOfferMarker = (offer) => {
     });
 
   offerMarker
-    .addTo(map)
+    .addTo(pinsGroup)
     .bindPopup(renderPopup(offer));
 };
 
-const createMapMarkers = (offers) => {
-  offers.forEach((offer) => {
+const renderMapPins = (offers) => {
+  pinsGroup.clearLayers();
+  const necessaryOffers = offers.slice(0, SIMILAR_OFFERS_COUNT);
+  necessaryOffers.forEach((offer) => {
     createOfferMarker(offer);
   });
 };
@@ -83,4 +88,4 @@ const resetMap = () => {
   map.setView(tokyoCoordinates, ZOOM);
 };
 
-export {createMapMarkers, resetMap, activateMap};
+export {renderMapPins, resetMap, activateMap};

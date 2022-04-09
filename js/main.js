@@ -1,27 +1,22 @@
-// import {activateForm, blockAllForm} from './activate-form.js';
-import {setUserFormSubmit} from './user-form.js';
-import {activateMap, createMapMarkers} from './map.js';
-import {showErrMessage} from './util.js';
-import {getMessage} from './message.js';
-import {getData, renderMapPins} from './api.js';
+import {blockAllForms, unblockFilters} from './activate-form.js';
+import {setUserFormSubmit, resetButtonHandler} from './user-form.js';
+import {activateMap} from './map.js';
+import {showServerErrorMessage} from './messages.js';
+import {getData} from './api.js';
+import {activateFilters, filtersFormChange} from './filters.js';
+import {debounce} from './util.js';
+import './photos.js';
 
-// const SIMILAR_OFFERS_COUNT = 10;
-
-setUserFormSubmit(getMessage); //нужен ли вообще аргумент?
-/*
-1.неактивное состояние, заблокировано всё
-2.загрузка карты
-3.форма для объявление разблокирована
-4.загрузка пинов
-5.фильтры разблокированы   /если пины не загрузились - сообщение об ошибке, фильтры остаются недоступными
-*/
+const RERENDER_DELAY = 400;
 
 
-// activateForm(false);
-// blockAllForm();
-
+blockAllForms();
 activateMap();
+getData((offers) => {
+  unblockFilters(); //нужно запустить только один раз
+  activateFilters(offers);
+  filtersFormChange(debounce(() => activateFilters(offers), RERENDER_DELAY));
+  resetButtonHandler(() => activateFilters(offers));
+  setUserFormSubmit(() => activateFilters(offers));
 
-getData(renderMapPins, showErrMessage);
-
-
+}, showServerErrorMessage);
