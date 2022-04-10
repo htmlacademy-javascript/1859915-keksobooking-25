@@ -85,18 +85,19 @@ guestsField.addEventListener('change', () => {
   pristine.validate(roomsField);
 });
 
+const timeInInput = form.querySelector('#timein');
+const timeOutInput = form.querySelector('#timeout');
+
 const onTimeInChange = () => {
-  const timeIn = document.querySelector('#timein').value;
-  document.querySelector('#timeout').value = timeIn;
+  const timeIn = timeInInput.value;
+  timeOutInput.value = timeIn;
 };
 
 const onTimeOutChange = () => {
-  const timeOut = document.querySelector('#timeout').value;
-  document.querySelector('#timein').value = timeOut;
+  const timeOut = timeOutInput.value;
+  timeInInput.value = timeOut;
 };
 
-const timeInInput = document.querySelector('#timein');
-const timeOutInput = document.querySelector('#timeout');
 timeInInput.addEventListener('change', onTimeInChange);
 timeOutInput.addEventListener('change', onTimeOutChange);
 
